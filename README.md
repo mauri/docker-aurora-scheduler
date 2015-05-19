@@ -1,5 +1,9 @@
 # Docker image to start an Aurora Scheduler
 
+In the project directory, build with
+
+    docker build -t medallia/aurora-scheduler .
+    
 Using a release from github.com/medallia/aurora.
 
     docker run --name=aurora-scheduler-1 -e CLUSTER=devcluster \

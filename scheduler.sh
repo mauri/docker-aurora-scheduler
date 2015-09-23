@@ -22,8 +22,8 @@ AURORA_FLAGS=(
   -native_log_file_path=$AURORA_DATA/scheduler/db 
   -backup_dir=$AURORA_DATA/scheduler/backups
   -thermos_executor_path=$EXECUTOR_HOME/thermos_executor.pex
-  -gc_executor_path=$EXECUTOR_HOME/gc_executor.pex
   -thermos_executor_resources=$EXECUTOR_RESOURCES 
+  -allow_docker_parameters=true
   -vlog=INFO 
   -logtostderr 
   -allowed_container_types=MESOS,DOCKER 

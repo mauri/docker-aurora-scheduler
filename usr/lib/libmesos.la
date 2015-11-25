@@ -5,10 +5,10 @@
 # It is necessary for linking the library.
 
 # The name that we can dlopen(3).
-dlname='libmesos-0.22.0.so'
+dlname='libmesos-0.23.0.so'
 
 # Names of this library.
-library_names='libmesos-0.22.0.so libmesos-0.22.0.so libmesos.so'
+library_names='libmesos-0.23.0.so libmesos-0.23.0.so libmesos.so'
 
 # The name of the static archive.
 old_library=''

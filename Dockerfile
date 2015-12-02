@@ -2,7 +2,7 @@ FROM java:openjdk-8-jdk
 
 RUN apt-get update && apt-get install -y git python-dev build-essential
 
-ENV AURORA_REVISION 0.10.0
+ENV AURORA_REVISION 0.10.0-medallia-cmd
 
 RUN git clone https://github.com/medallia/aurora.git /aurora &&\
 	cd aurora && \

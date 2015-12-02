@@ -14,7 +14,4 @@ Using a release from github.com/medallia/aurora.
     -e EXECUTOR_RESOURCES=file:///foo/bar/zaa \
      medallia/aurora-scheduler
 
-## TODO
-	
-Pull aurora scheduler release from github.com/medallia/aurora and ADD it to the container
 

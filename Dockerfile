@@ -13,8 +13,7 @@ RUN ln -s /usr/local/aurora-scheduler-$(cat aurora/.auroraversion) /usr/local/au
 RUN rm -rf /aurora
 
 COPY /scheduler.sh /
-COPY /executor /opt/aurora/executors
-
+COPY lib /usr
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
 WORKDIR /

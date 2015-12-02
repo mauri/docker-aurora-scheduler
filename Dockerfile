@@ -2,7 +2,7 @@ FROM java:openjdk-8-jdk
 
 RUN apt-get update && apt-get install -y git python-dev build-essential
 
-ENV AURORA_REVISION 0.10.0
+ENV AURORA_REVISION 0.10.0-medallia-cmd
 
 RUN git clone https://github.com/medallia/aurora.git /aurora &&\
 	cd aurora && \
@@ -13,7 +13,6 @@ RUN ln -s /usr/local/aurora-scheduler-$(cat aurora/.auroraversion) /usr/local/au
 RUN rm -rf /aurora
 
 COPY /scheduler.sh /
-COPY /executor /opt/aurora/executors
 
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 

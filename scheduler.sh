@@ -1,5 +1,4 @@
 #!/bin/bash
-AURORA_HOME=/usr/local/aurora-scheduler
 EXECUTOR_HOME=/opt/aurora/executors
 AURORA_DATA=/opt/aurora
 
@@ -38,4 +37,4 @@ ARGUMENTS=( "${AURORA_FLAGS[@]}" "$@" )
 export GLOG_v=1
 export LIBPROCESS_PORT=8083
 
-JAVA_OPTS="${JAVA_OPTS[*]}" exec "$AURORA_HOME/bin/aurora-scheduler" "${ARGUMENTS[@]}"
+JAVA_OPTS="${JAVA_OPTS[*]}" exec "/usr/sbin/aurora-scheduler" "${ARGUMENTS[@]}"

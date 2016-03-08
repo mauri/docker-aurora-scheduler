@@ -1,17 +1,23 @@
 # Docker image to start an Aurora Scheduler
 
+## Build Docker Image
 In the project directory, build with
 
-    docker build -t medallia/aurora-scheduler .
+    $ build.sh <aurora-release-name> <snapshot-tar-gz-url>
+
+Example
+
+	$ build 0.11.0-medallia https://github.com/medallia/aurora/archive/0.11.0-medallia.tar.gz
+
+An image aurora-scheduler:<aurora-release-name> is generated.
+
+## Running the Container
+
+    docker run --name=aurora-scheduler-1  				\
+    medallia/aurora-scheduler             				\
+    -cluster_name=foo      								\
+    -native_log_quorum_size=1      						\
+    -zk_endpoints=192.168.0.1:2181						\
+    -mesos_master_address=zk://192.168.0.1:2181/mesos	\
+    -thermos_executor_resources=file:///.dockercfg
     
-Using a release from github.com/medallia/aurora.
-
-    docker run --name=aurora-scheduler-1 -e CLUSTER=devcluster \
-    -e ZK=z1.example.com:2181,z2.example.com:2181,z3.example.com:2181 \
-    -e MESOS_ZK=zk://z1.example.com:2181,z2.example.com:2181,z3.example.com:2181/mesos \
-    -e NATIVE_LOG_QUORUM_SIZE=2 \
-    -e AURORA_DATA=/opt/aurora   
-    -e EXECUTOR_RESOURCES=file:///foo/bar/zaa \
-     medallia/aurora-scheduler
-
-

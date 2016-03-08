@@ -3,12 +3,7 @@ EXECUTOR_HOME=/opt/aurora/executors
 AURORA_DATA=/opt/aurora
 
 # Flags controlling the JVM.
-JAVA_OPTS=(
-  -Xmx2g
-  -Xms2g
-  -Djava.library.path=/usr/lib
-  # GC tuning, etc.
-)
+JAVA_OPTS="-Djava.library.path=/usr/lib"
 
 # Flags controlling the scheduler.
 # AURORA_FLAGS=(
@@ -37,4 +32,4 @@ ARGUMENTS=( "${AURORA_FLAGS[@]}" "$@" )
 export GLOG_v=1
 export LIBPROCESS_PORT=8083
 
-JAVA_OPTS="${JAVA_OPTS[*]}" exec "/usr/sbin/aurora-scheduler" "${ARGUMENTS[@]}"
+JAVA_OPTS="${JAVA_OPTS}" exec "/usr/sbin/aurora-scheduler" "${ARGUMENTS[@]}"

@@ -1,6 +1,6 @@
 FROM ubuntu:trusty
 ARG AURORA_RELEASE
-RUN apt-get install -y software-properties-common && \
+RUN apt-get update && apt-get install -y software-properties-common && \
 	add-apt-repository -y ppa:webupd8team/java && \
 	apt-get update 
 

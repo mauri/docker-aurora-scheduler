@@ -5,8 +5,8 @@ if [ $# -eq 0 ]; then
 	echo "Usage: build.sh <aurora-release-name> <snapshot-tar-gz-url>"
 fi;
 
-AURORA_SNAPSHOT="https://github.com/medallia/aurora/archive/0.12.0-medallia.tar.gz"
-AURORA_RELEASE="0.12.0-medallia"
+AURORA_SNAPSHOT="${2:-https://github.com/medallia/aurora/archive/0.12.0-medallia-1.tar.gz}"
+AURORA_RELEASE="${1:-0.12.0-medallia}"
 AURORA_PACKAGE_BRANCH="$(echo $AURORA_RELEASE | head -c 5)x"
 
 AURORA_IMAGE="aurora-scheduler:${AURORA_RELEASE}"
@@ -20,7 +20,9 @@ BASE_DIR="$(pwd)"
 
 # fetch source
 wget -O "snap.tar.gz" "$AURORA_SNAPSHOT"
-git clone "https://github.com/apache/aurora-packaging.git" "aurora-packaging"
+if [ ! -d aurora-packaging ]; then
+    git clone "https://github.com/apache/aurora-packaging.git" "aurora-packaging"
+fi
 
 (cd aurora-packaging && \
  git fetch origin "$AURORA_PACKAGE_BRANCH" && \

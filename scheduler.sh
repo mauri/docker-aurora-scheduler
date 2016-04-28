@@ -18,8 +18,6 @@ AURORA_FLAGS=(
   -backup_dir=$AURORA_DATA/scheduler/backups
   -thermos_executor_path=$EXECUTOR_HOME/thermos_executor.pex
   -allow_docker_parameters=true
-  -vlog=INFO 
-  -logtostderr 
   -allowed_container_types=MESOS,DOCKER 
 )
 

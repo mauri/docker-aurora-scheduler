@@ -1,9 +1,10 @@
 #! /bin/bash
-set -eux
-
 if [ $# -eq 0 ]; then
 	echo "Usage: build.sh <aurora-release-name> <snapshot-tar-gz-url>"
-fi;
+	exit
+fi
+
+set -eux
 
 AURORA_SNAPSHOT="${2:-https://github.com/medallia/aurora/archive/0.12.0-medallia-1.tar.gz}"
 AURORA_RELEASE="${1:-0.12.0-medallia}"
@@ -32,4 +33,4 @@ fi
         "$AURORA_RELEASE" && \
  cp -a "artifacts/aurora-ubuntu-trusty/dist/aurora-scheduler_${AURORA_RELEASE}_amd64.deb" "${BASE_DIR}")
 
-docker build --build-arg "AURORA_RELEASE=${AURORA_RELEASE}" -t "${AURORA_IMAGE}" .
+docker build --build-arg "AURORA_RELEASE=${AURORA_RELEASE}" -t "docker.m8s.io/medallia/${AURORA_IMAGE}" .

@@ -17,8 +17,8 @@ ADD aurora-scheduler_${AURORA_RELEASE}_amd64.deb /
 
 RUN dpkg -i /aurora-scheduler_${AURORA_RELEASE}_amd64.deb && rm /aurora-scheduler_${AURORA_RELEASE}_amd64.deb
 
-COPY /scheduler.sh /
+COPY /run.sh /
 
 WORKDIR /
 
-ENTRYPOINT ["/scheduler.sh"]
+ENTRYPOINT ["/run.sh"]

@@ -1,0 +1,37 @@
+hello_world_proc = Process(
+    name="hello_process",
+    cmdline="""
+    while true
+	do
+    		echo -n "Hello Instance: ${AURORA_TASK_INSTANCE} " && date
+    		sleep 120
+	done
+""")
+
+hello_world_task = Task(
+  name = 'hello docker',
+  processes = [hello_world_proc],
+  resources = Resources(cpu = 0.1, ram = 1*MB, disk=8*MB))
+      
+p = [Parameter(name="label", value="#{setLabelValue}")]
+
+jobs = [
+       Service(cluster       = 'devcluster',
+          role               = 'testing',
+          environment        = 'test',
+          name               = 'service',
+          task               =  hello_world_task,
+	  instances	     =  7,
+	  instance_variables = [
+		Instance(variables=[
+			Variable(name="setLabelValue", value="Label=FirstLabel")]),
+		Instance(variables=[
+                        Variable(name="setLabelValue", value="Label=SecondLabel")]),
+		Instance(variables=[
+                        Variable(name="setLabelValue", value="Label=ThirdLabel")]),
+                Instance(variables=[
+                        Variable(name="setLabelValue", value="Label=FourthLabel")]),
+                Instance(variables=[
+                        Variable(name="setLabelValue", value="Label=FifthLabel")])
+			],
+	  container = Container(docker = Docker(image = "python:2.7", parameters=p)))]

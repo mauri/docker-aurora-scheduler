@@ -20,7 +20,7 @@ echo "DOCKER IMAGE ${AURORA_IMAGE}"
 BASE_DIR="$(pwd)"
 
 # fetch source
-wget -O "snap.tar.gz" "$AURORA_SNAPSHOT"
+curl -L -o "snap.tar.gz" "$AURORA_SNAPSHOT"
 if [ ! -d aurora-packaging ]; then
     git clone "https://github.com/apache/aurora-packaging.git" "aurora-packaging"
 fi

@@ -1,14 +1,15 @@
 #!/bin/bash
+
 EXECUTOR_HOME=/opt/aurora/executors
 AURORA_DATA=/opt/aurora
-
+AURORA_SCHEDULER=/opt/aurora/scheduler
 
 # initialize Aurora storage if it's empty
-if [ -d "${AURORA_DATA}" ] && [ ! "$(ls -A "${AURORA_DATA}")" ]; then
-	echo "Initializing Aurora storage in ${AURORA_DATA}"
-	mkdir -p "${AURORA_DATA}/scheduler/db"
-	mkdir -p "${AURORA_DATA}/scheduler/backups"
-	mesos-log initialize --path="${AURORA_DATA}/scheduler/db"
+if [ -d "${AURORA_DATA}" ] && [ ! "$(ls -A "${AURORA_SCHEDULER}")" ]; then
+	echo "Initializing Aurora storage in ${AURORA_SCHEDULER}"
+	mkdir -p "${AURORA_SCHEDULER}/db"
+	mkdir -p "${AURORA_SCHEDULER}/backups"
+	mesos-log initialize --path="${AURORA_SCHEDULER}/db"
 fi
 
 # Flags controlling the scheduler.

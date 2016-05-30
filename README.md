@@ -7,7 +7,7 @@ In the project directory, build with
 
 Example
 
-	$ build 0.11.0-medallia https://github.com/medallia/aurora/archive/0.11.0-medallia.tar.gz
+	$ build.sh 0.11.0-medallia https://github.com/medallia/aurora/archive/0.11.0-medallia.tar.gz
 
 An image aurora-scheduler:<aurora-release-name> is generated.
 

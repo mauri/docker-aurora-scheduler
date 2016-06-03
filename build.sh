@@ -1,14 +1,9 @@
 #! /bin/bash
-if [ $# -eq 0 ]; then
-	echo "Usage: build.sh <aurora-release-name> <snapshot-tar-gz-url>"
-	exit
-fi
-
 set -eux
 
-AURORA_SNAPSHOT="${2:-https://github.com/medallia/aurora/archive/0.12.0-medallia-1.tar.gz}"
-AURORA_RELEASE="${1:-0.12.0-medallia}"
-AURORA_PACKAGE_BRANCH="$(echo $AURORA_RELEASE | head -c 5)x"
+AURORA_SNAPSHOT="https://github.com/medallia/aurora/archive/rel/0.13.0-medallia.tar.gz"
+AURORA_RELEASE="0.13.0-medallia"
+AURORA_PACKAGE_BRANCH="master"
 
 AURORA_IMAGE="aurora-scheduler:${AURORA_RELEASE}"
 

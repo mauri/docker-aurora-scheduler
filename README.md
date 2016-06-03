@@ -3,13 +3,9 @@
 ## Build Docker Image
 In the project directory, build with
 
-    $ build.sh <aurora-release-name> <snapshot-tar-gz-url>
+    $ ./build.sh 
 
-Example
-
-	$ build.sh 0.11.0-medallia https://github.com/medallia/aurora/archive/0.11.0-medallia.tar.gz
-
-An image aurora-scheduler:<aurora-release-name> is generated.
+An image docker.m8s.io/medallia/aurora-scheduler:version is generated.
 
 ## Running the Container
 

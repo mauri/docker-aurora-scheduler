@@ -29,4 +29,4 @@ fi
         "$AURORA_RELEASE" && \
  cp -a "artifacts/aurora-ubuntu-trusty/dist/aurora-scheduler_${AURORA_RELEASE}_amd64.deb" "${BASE_DIR}")
 
-docker build --build-arg "AURORA_RELEASE=${AURORA_RELEASE}" -t "docker.m8s.io/medallia/${AURORA_IMAGE}" .
+docker build --build-arg "AURORA_RELEASE=${AURORA_RELEASE}" -t "medallia/${AURORA_IMAGE}" .

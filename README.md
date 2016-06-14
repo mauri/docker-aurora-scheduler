@@ -5,7 +5,7 @@ In the project directory, build with
 
     $ ./build.sh 
 
-An image docker.m8s.io/medallia/aurora-scheduler:version is generated.
+An image medallia/aurora-scheduler:version is generated.
 
 ## Running the Container
 

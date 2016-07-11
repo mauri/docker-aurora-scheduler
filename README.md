@@ -17,3 +17,5 @@ An image medallia/aurora-scheduler:version is generated.
     -mesos_master_address=zk://192.168.0.1:2181/mesos	\
     -thermos_executor_resources=file:///.dockercfg
     
+___________________________________________________
+*Copyright 2016 Medallia Inc. All rights reserved*

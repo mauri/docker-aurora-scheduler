@@ -1,9 +1,9 @@
 #! /bin/bash
 set -eux
 
-AURORA_IMAGE_VERSION="v2.0.0"
-AURORA_SNAPSHOT="https://github.com/medallia/aurora/archive/rel/0.13.0-medallia.tar.gz"
-AURORA_RELEASE="0.13.0-medallia"
+AURORA_IMAGE_VERSION="v2.1.0"
+AURORA_RELEASE="0.13.0-medallia-2"
+AURORA_SNAPSHOT="https://github.com/medallia/aurora/archive/rel/${AURORA_RELEASE}.tar.gz"
 AURORA_PACKAGE_BRANCH="master"
 
 AURORA_IMAGE="aurora-scheduler:${AURORA_IMAGE_VERSION}-${AURORA_RELEASE}"

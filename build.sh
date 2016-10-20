@@ -1,7 +1,7 @@
 #! /bin/bash
 set -eux
 
-AURORA_IMAGE_VERSION="v2.1.0"
+AURORA_IMAGE_VERSION="v2.2.0"
 AURORA_RELEASE="0.13.0-medallia-2"
 AURORA_SNAPSHOT="https://github.com/medallia/aurora/archive/rel/${AURORA_RELEASE}.tar.gz"
 AURORA_PACKAGE_BRANCH="0.13.x"

@@ -16,7 +16,7 @@ RUN apt-get update && \
 	ca-certificates \
 	curl
 
-RUN curl -L https://github.com/medallia/aurora/releases/download/rel%2F${AURORA_RELEASE}/aurora-scheduler_${AURORA_RELEASE}_amd64.deb -o /aurora-scheduler_${AURORA_RELEASE}_amd64.deb
+RUN curl -L https://github.com/medallia/aurora/releases/download/${AURORA_RELEASE}/aurora-scheduler_${AURORA_RELEASE}_amd64.deb -o /aurora-scheduler_${AURORA_RELEASE}_amd64.deb
 
 RUN dpkg -i /aurora-scheduler_${AURORA_RELEASE}_amd64.deb && rm /aurora-scheduler_${AURORA_RELEASE}_amd64.deb
 

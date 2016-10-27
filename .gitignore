@@ -2,4 +2,4 @@ aurora
 snap.tar.gz
 aurora-packaging
 *.deb
-
+*.rpm

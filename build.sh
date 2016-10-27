@@ -22,7 +22,7 @@ function upload {
     echo "Cannot find package $1"
     exit 1
   fi
-  STATUS=""
+
   echo "Uploading $1 to github"
   UPLOAD_URL="${UPLOAD_URL}?name=$1" 
   RES=$(curl -# -XPOST -H "Authorization:token ${GITHUB_TOKEN}" -H "Content-Type:application/octet-stream" --data-binary @$1 ${UPLOAD_URL})
@@ -49,19 +49,22 @@ if [ $BUILD_PACKAGE -eq 1 ]; then
       git clone "https://github.com/apache/aurora-packaging.git" "aurora-packaging"
   fi
 
-  (cd aurora-packaging && \
-  git fetch origin "$AURORA_PACKAGE_BRANCH" && \
-  git checkout "$AURORA_PACKAGE_BRANCH" && \
-  # build debs for ubuntu-trusty
-  ./build-artifact.sh builder/deb/ubuntu-trusty \
+  pushd aurora-packaging
+    git fetch origin "$AURORA_PACKAGE_BRANCH"
+    git checkout "$AURORA_PACKAGE_BRANCH"
+
+    # build debs for ubuntu-trusty
+    ./build-artifact.sh builder/deb/ubuntu-trusty \
           "${BASE_DIR}/snap.tar.gz" \
-	  "$AURORA_RELEASE" && \
-  find . -name \*aurora-scheduler\*.deb -exec cp {} ${BASE_DIR} \; && \
-   # build rpms for centos-7
-  ./build-artifact.sh builder/rpm/centos-7 \
+	  "$AURORA_RELEASE"
+    find . -name \*aurora-scheduler\*.deb -exec cp {} ${BASE_DIR} \;
+
+    # build rpms for centos-7
+    ./build-artifact.sh builder/rpm/centos-7 \
           "${BASE_DIR}/snap.tar.gz" \
-	  "$AURORA_RELEASE" && \
-  find . -name \*aurora-scheduler\*.rpm -exec cp {} ${BASE_DIR} \;)
+	  "$AURORA_RELEASE"
+    find . -name \*aurora-scheduler\*.rpm -exec cp {} ${BASE_DIR} \;
+  popd
 
 fi
 

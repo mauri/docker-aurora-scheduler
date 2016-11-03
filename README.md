@@ -1,16 +1,27 @@
 # Docker image to start an Aurora Scheduler
 
-## Build Docker Image
+## Build .rpm and .deb artifacts
+In the project directory run:
+
+    $ make build-artifacts
+
+## Publish .rpm and .deb artifacts to Github release
+In the project directory run:
+
+    $ export GITHUB_TOKER=token
+    $ make publish-artifacts
+
+## Build Docker images
 In the project directory, build with
 
-    $ ./build.sh 
+    $ make build-images 
 
-An image medallia/aurora-scheduler:version is generated.
+An image medallia/aurora-scheduler:<version>-<os> is generated.
 
 ## Running the Container
 
     docker run --name=aurora-scheduler-1  				\
-    medallia/aurora-scheduler             				\
+    medallia/aurora-scheduler:<version>-<os>             				\
     -cluster_name=foo      								\
     -native_log_quorum_size=1      						\
     -zk_endpoints=192.168.0.1:2181						\

@@ -1,6 +1,7 @@
 FROM ubuntu:trusty
 
 ARG AURORA_RELEASE=0.13.0-medallia
+ARG GITHUB_AURORA_RELEASE=0.13.0-medallia-2
 
 RUN apt-get update && \
 	apt-get install -y software-properties-common && \
@@ -16,9 +17,9 @@ RUN apt-get update && \
 	ca-certificates \
 	curl
 
-RUN curl -L https://github.com/medallia/aurora/releases/download/${AURORA_RELEASE}/aurora-scheduler_${AURORA_RELEASE}_amd64.deb -o /aurora-scheduler_${AURORA_RELEASE}_amd64.deb
+RUN curl -L https://github.com/medallia/aurora/releases/download/${GITHUB_AURORA_RELEASE}/aurora-scheduler_${AURORA_RELEASE}_amd64.deb -o /aurora-scheduler.deb
 
-RUN dpkg -i /aurora-scheduler_${AURORA_RELEASE}_amd64.deb && rm /aurora-scheduler_${AURORA_RELEASE}_amd64.deb
+RUN dpkg -i /aurora-scheduler.deb && rm /aurora-scheduler.deb
 
 COPY /run.sh /
 

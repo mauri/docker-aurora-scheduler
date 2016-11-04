@@ -1,10 +1,10 @@
-AURORA_IMAGE_VERSION=v2.2.0
+BASE_REPO=docker.m8s.io/medallia
 AURORA_VERSION=0.13.0
 AURORA_RELEASE=$(AURORA_VERSION)-medallia-2
+# can be used to customize the release name (e.g. pre-release)
+GITHUB_AURORA_RELEASE=$(AURORA_RELEASE)
 AURORA_SNAPSHOT=https://github.com/medallia/aurora/archive/rel/$(AURORA_RELEASE).tar.gz
 AURORA_PACKAGE_BRANCH=0.13.x
-
-GITHUB_AURORA_RELEASE=$(AURORA_VERSION)-medallia-2-full
 
 define fetch_aurora
 	cd scratch && \
@@ -25,14 +25,17 @@ define fetch_aurora_packaging
     	git checkout "$(AURORA_PACKAGE_BRANCH)"
 endef
 
+## Create .debs and .rpms using aurora-packaging
+## .rpms are renamed so they follow the standard AURORA_RELEASE convention naming 
 define build_artifacts
 	cd scratch/aurora-packaging && \
-    	./build-artifact.sh ../snap.tar.gz $(AURORA_RELEASE)  
-	@mkdir scratch/artifacts
-	find . \( -path \*ubuntu\*.deb -o -path \*centos\*.rpm \) -exec cp {} scratch/artifacts
+    	-./build-artifact.sh ../snap.tar.gz $(AURORA_RELEASE) 
+	-mkdir scratch/artifacts
+	find . \( -path \*ubuntu\*.deb -o -path \*centos\*.rpm \) -exec cp {} scratch/artifacts \;  && \
+		for f in scratch/artifacts/*.rpm; do mv "$$f" "$${f/$(subst -,_,$(AURORA_RELEASE))/$(AURORA_RELEASE)}"; done 
 endef
 
-define def_upload_url
+define get_upload_url
 	if [ -z $(GITHUB_TOKEN) ]; then \
 		echo "Missing GITHUB_TOKEN environment variable"; \
 		exit 1; \
@@ -65,10 +68,19 @@ define upload_artifact
 	fi
 endef
 
-define build_docker_image
-	cd $(1) && \
-	docker build -t "medallia/aurora-scheduler:$(AURORA_IMAGE_VERSION)-$(AURORA_RELEASE)-$(shell basename $(1))" \
-		 -f Dockerfile --build-arg "AURORA_RELEASE=$(AURORA_RELEASE)" .
+define build_docker
+	echo $(1)
+	cd $(1); \
+	TAG=$(shell cat $(1)/TAG); \
+	docker build -t "medallia/aurora-scheduler:$$TAG" \
+		 -f Dockerfile --build-arg "GITHUB_AURORA_RELEASE=$(GITHUB_AURORA_RELEASE)" \
+		 --build-arg "AURORA_RELEASE=$(AURORA_RELEASE)" . ; \
+	docker tag medallia/aurora-scheduler:$$TAG $(BASE_REPO)/aurora-scheduler:$$TAG
+endef
+
+define publish_docker
+	TAG=$(shell cat $(1)/TAG); \
+	docker push $(BASE_REPO)/aurora-scheduler:$$TAG
 endef
 
 build-artifacts:
@@ -76,22 +88,25 @@ build-artifacts:
 	@echo "RELEASE $(AURORA_RELEASE)"
 	@echo "SNAPSHOT $(AURORA_SNAPSHOT)"
 
-	@mkdir -p scratch
+	-mkdir -p scratch
 	$(call fetch_aurora)
 	$(call fetch_aurora_packaging)
 	$(call build_artifacts)
 
 publish-artifacts:
 	@echo "Uploading artifacts for $(AURORA_RELEASE) to $(GITHUB_AURORA_RELEASE)"
-	$(call def_upload_url)
+	$(call get_upload_url)
 	$(foreach artifact,$(sort $(wildcard $(PWD)/scratch/artifacts/*)),$(call upload_artifact,$(artifact));)
 
 build-images:
-	@echo "Building Docker image $(AURORA_RELEASE)"
-	$(foreach dir,$(sort $(dir $(wildcard $(PWD)/dockerfiles/*/))),$(call build_docker_image,$(dir),$(shell basename $(dir)));)
+	@echo "Building Docker images dor $(AURORA_RELEASE)"
+	$(foreach dir,$(sort $(dir $(wildcard dockerfile-templates/*/))),$(call build_docker,$(dir));)
+
+publish-images:
+	@echo "Publishing Docker images for Mesos"
+	$(foreach dir,$(sort $(dir $(wildcard dockerfile-templates/*/))),$(call publish_docker,$(dir));)
 
 clean:
 	@rm -rf scratch
 
 .PHONY: build-artifacts plublish-artifacts build-image clean
-
